@@ -53,9 +53,9 @@ namespace Kreslitko
             mobjGrafikaVRam = Graphics.FromImage(mobjBitmap);
             mobjGrafikaVRam.Clear(Color.White);
         }
-        //--------------------------------------
+        //---------------------------------------------------------
         // tlačítko smazat
-        //----------------------------------------
+        //---------------------------------------------------------
         private void btVymazat_Click(object sender, EventArgs e)
         {
             // Vymazání bitmapy
@@ -66,9 +66,9 @@ namespace Kreslitko
             // Update PictureBoxu
             pbPlatno.Image = mobjBitmap;
         }
-        //---------------------------------------
+        //---------------------------------------------------------
         // pohyb myši nad pictureboxem
-        //-------------------------------------
+        //---------------------------------------------------------
         private void pbPlatno_MouseMove(object sender, MouseEventArgs e)
         {
             //deklarace proměnné
@@ -110,9 +110,9 @@ namespace Kreslitko
             
             }
         }
-        //---------------------------------------
+        //---------------------------------------------------------
         // stisknutí myši nad pictureboxem
-        //-------------------------------------
+        //---------------------------------------------------------
         private void pbPlatno_MouseDown(object sender, MouseEventArgs e)
         {
             //deklarace proměnné
@@ -139,9 +139,9 @@ namespace Kreslitko
                 mblImDrawing = false;
             }
         }
-        //---------------------------------------
+        //---------------------------------------------------------
         // uvolnění  myši nad pictureboxem
-        //-------------------------------------
+        //---------------------------------------------------------
         private void pbPlatno_MouseUp(object sender, MouseEventArgs e)
         {
             try
@@ -170,9 +170,9 @@ namespace Kreslitko
                 mblImDrawing = false;
             }
         }
-        //---------------------------------------
+        //---------------------------------------------------------
         // kreslení jedlotlivých útvarů
-        //-------------------------------------
+        //---------------------------------------------------------
         private void NakresliObjekt(Graphics objGrafika)
         {
             try
@@ -270,9 +270,9 @@ namespace Kreslitko
 
             }
         }
-        //--------------------------------------
+        //---------------------------------------------------------
         // tlačítko barev
-        //----------------------------------------
+        //---------------------------------------------------------
         private void pnColor_MouseDown(object sender, MouseEventArgs e)
         {
             try
@@ -305,9 +305,9 @@ namespace Kreslitko
             }
         }
 
-        //--------------------------
+        //---------------------------------------------------------
         // výběr nástroje
-        //------------------------
+        //---------------------------------------------------------
         private void rbTool_CheckedChanged(object sender, EventArgs e)
         {
             try
@@ -339,16 +339,16 @@ namespace Kreslitko
                 rbLine.Checked = true;
             }
         }
-        //---------------------------------
+        //---------------------------------------------------------
         // menu strip ukončit program
-        //------------------------------
+        //---------------------------------------------------------
         private void tsmiKonec_Click(object sender, EventArgs e)
         {
             Application.Exit();
         }
-        //-----------------------------------
+        //---------------------------------------------------------
         //menu strip uložit obrázek
-        //----------------------------------
+        //---------------------------------------------------------
         private void tsmiUlozit_Click(object sender, EventArgs e)
         {
             try
@@ -400,9 +400,43 @@ namespace Kreslitko
             }
         }
 
+
+
         private void tsmiOtevrit_Click(object sender, EventArgs e)
         {
+            try
+            {
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    mobjBitmap = new Bitmap(openFileDialog.FileName);
+                    mobjGrafikaVRam = Graphics.FromImage(mobjBitmap);
+                    pbPlatno.Image = mobjBitmap;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("ses mongoloid");
+            }
+        }
+
+
+        private void Form1_Resize(object sender, EventArgs e)
+        {
+            Bitmap newBitmap = new Bitmap(pbPlatno.Width, pbPlatno.Height);
+            using (Graphics ResizedGraphics = Graphics.FromImage(newBitmap))
+            {
+             
+                // Pouziti mobjBMGraphics na prekresleni stare Bitmapy
+                ResizedGraphics.DrawImage(mobjBitmap, 0, 0, pbPlatno.Width, pbPlatno.Height);
+            }
+            // Zamen starou Bitmapu za novou
+            mobjBitmap = newBitmap;
+            // Vytvor nový objekt pro novou Bitmapu
+            mobjGrafikaVRam = Graphics.FromImage(mobjBitmap);
 
         }
     }
+
 }
+
+
